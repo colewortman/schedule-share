@@ -12,21 +12,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: schedule_share
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd="pg_isready -U postgres"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-
     defaults:
       run:
         working-directory: apps/api
@@ -48,14 +33,7 @@ jobs:
       - name: Build TypeScript
         run: npm run build
 
-      - name: Reset Database
-        run: npm run db:reset
-        env:
-          PGPASSWORD: password
-
       - name: Lint and Test
         run: |
           npm run lint
           npm test
-        env:
-          DATABASE_URL: postgres://postgres:password@localhost:5432/schedule_share
