@@ -8,7 +8,8 @@
     "dev": "ts-node-dev --respawn src/index.ts",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
-    "test": "jest",
+    "db:reset": "psql -v ON_ERROR_STOP=1 -U postgres -d schedule_share -f delete-db.sql && psql -v ON_ERROR_STOP=1 -U postgres -d schedule_share -f create-db.sql",
+    "test": "npm run db:reset && jest",
     "test:watch": "jest --watch"
   },
   "keywords": [],
