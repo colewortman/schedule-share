@@ -1,0 +1,11 @@
+name: Full CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  api:
+    uses: ./.github/workflows/api-ci.yml
+  web:
+    uses: ./.github/workflows/web-ci.yml
