@@ -20,7 +20,6 @@ describe('UserRepository', () => {
     afterAll(async () => {
         await dbClient.query(`delete from schedule.users`);
         await dbClient.end();
-        // testing CI
     });
 
     it('should retrieve all users from the database', async () => {
