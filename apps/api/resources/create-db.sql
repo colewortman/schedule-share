@@ -23,8 +23,8 @@ create table schedule.group_members (
 
 create table schedule.schedules (
     schedule_id uuid primary key,
-    user_id uuid not null references schedule.users (user_id) on delete cascade,
-    group_id uuid not null references schedule.groups (group_id) on delete cascade,
+    user_id uuid references schedule.users (user_id) on delete cascade,
+    group_id uuid references schedule.groups (group_id) on delete cascade,
     check (
         (
             user_id is not null
