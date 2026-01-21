@@ -32,8 +32,8 @@ router.get('/users/:id', async (req: Request<UserIdParams>, res: Response) => {
 // Create a new user
 router.post('/users', async (req: Request, res: Response) => {
     try {
-        const { id, name, email, passwordHash } = req.body;
-        const newUser = await UserService.createUser(id, name, email, passwordHash);
+        const { user_name, email, password } = req.body;
+        const newUser = await UserService.createUser(user_name, email, password);
         res.status(201).json(newUser);
     } catch (error) {
         console.error('Error creating user:', error);
@@ -44,8 +44,8 @@ router.post('/users', async (req: Request, res: Response) => {
 // Update an existing user
 router.put('/users/:id', async (req: Request<UserIdParams>, res: Response) => {
     try {
-        const { name, email } = req.body;
-        const updatedUser = await UserService.updateUser(req.params.id, name, email);
+        const { user_name, email } = req.body;
+        const updatedUser = await UserService.updateUser(req.params.id, user_name, email);
         if (!updatedUser) {
             return res.status(404).json({ error: 'User not found' });
         }

@@ -1,5 +1,6 @@
 import UserRepository from "../../src/repository/UserRepository";
 import dbClient from "../../src/dbconfig";
+import { resetCounter } from '../__mocks__/uuid';
 
 describe('UserRepository', () => {
     const TEST_USER_1 = {
@@ -26,6 +27,7 @@ describe('UserRepository', () => {
     });
 
     beforeEach(async () => {
+        resetCounter();
 
         await dbClient.query(`delete from schedule.users`)
 

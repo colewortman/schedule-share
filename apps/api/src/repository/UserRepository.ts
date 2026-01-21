@@ -4,18 +4,18 @@ import dbClient from "../dbconfig";
 
 class UserRepository {
   static async getAllUsers() {
-    const res = await dbClient.query('SELECT * FROM schedule.users');
+    const res = await dbClient.query('SELECT user_id, user_name, email FROM schedule.users');
     return res.rows;
   }
 
   static async getUserById(userId: string) {
-    const res = await dbClient.query('SELECT * FROM schedule.users WHERE user_id = $1', [userId]);
+    const res = await dbClient.query('SELECT user_id, user_name, email FROM schedule.users WHERE user_id = $1', [userId]);
     return res.rows[0];
   }
 
   static async createUser(id: string, name: string, email: string, passwordHash: string) {
     const res = await dbClient.query(
-      'INSERT INTO schedule.users (user_id, user_name, email, password_hash) VALUES ($1, $2, $3, $4) RETURNING *',
+      'INSERT INTO schedule.users (user_id, user_name, email, password_hash) VALUES ($1, $2, $3, $4) RETURNING user_id, user_name, email',
       [id, name, email, passwordHash]
     );
     return res.rows[0];
