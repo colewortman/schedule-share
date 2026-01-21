@@ -15,7 +15,7 @@ export function createApp() {
   );
 
   app.use(express.json());
-  app.use("/", UserRoutes);
+  app.use("/api", UserRoutes);
 
   return app;
 }

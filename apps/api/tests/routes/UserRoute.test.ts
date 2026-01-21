@@ -25,7 +25,7 @@ describe('UserRoutes API', () => {
 
     it('GET /users - should return a list of users', async () => {
         const app = createApp();
-        const response = await request(app).get('/users');
+        const response = await request(app).get('/api/users');
 
         expect(response.status).toBe(200);
         expect(Array.isArray(response.body)).toBe(true);

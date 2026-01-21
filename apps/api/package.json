@@ -23,6 +23,7 @@
     "@types/node": "^25.0.9",
     "@types/pg": "^8.16.0",
     "@types/supertest": "^6.0.3",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.53.0",
     "@typescript-eslint/parser": "^8.53.0",
     "eslint": "^9.39.2",
@@ -37,6 +38,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "pg": "^8.17.1"
+    "pg": "^8.17.1",
+    "uuid": "^13.0.0"
   }
 }
