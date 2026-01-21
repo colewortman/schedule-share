@@ -6,6 +6,9 @@ const config: Config = {
   roots: ["<rootDir>/tests"],
   testMatch: ["**/*.test.ts"],
   clearMocks: true,
+  moduleNameMapper: {
+    '^uuid$': '<rootDir>/tests/__mocks__/uuid.ts',
+  },
 };
 
 export default config;
