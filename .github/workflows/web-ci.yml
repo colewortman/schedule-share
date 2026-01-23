@@ -3,12 +3,12 @@ name: Web CI
 on:
   push:
     branches:
-      - "dev/**"
+      - "dev**"
     paths:
       - "apps/web/**"
   pull_request:
     branches:
-      - "dev/**"
+      - "dev**"
     paths:
       - "apps/web/**"
 
