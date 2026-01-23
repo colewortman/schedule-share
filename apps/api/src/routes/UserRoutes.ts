@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import UserService from '../service/UserService';
-import type { UserIdParams } from '../types/RouteParams';
+import type { IdParams } from '../types/RouteParams';
 
 const router = Router();
 
@@ -16,7 +16,7 @@ router.get('/users', async (_req: Request, res: Response) => {
 });
 
 // Get user by ID
-router.get('/users/:id', async (req: Request<UserIdParams>, res: Response) => {
+router.get('/users/:id', async (req: Request<IdParams>, res: Response) => {
     try {
         const user = await UserService.getUserById(req.params.id);
         if (!user) {
@@ -42,7 +42,7 @@ router.post('/users', async (req: Request, res: Response) => {
 });
 
 // Update an existing user
-router.put('/users/:id', async (req: Request<UserIdParams>, res: Response) => {
+router.put('/users/:id', async (req: Request<IdParams>, res: Response) => {
     try {
         const { user_name, email } = req.body;
         const updatedUser = await UserService.updateUser(req.params.id, user_name, email);
@@ -57,7 +57,7 @@ router.put('/users/:id', async (req: Request<UserIdParams>, res: Response) => {
 });
 
 // Delete a user
-router.delete('/users/:id', async (req: Request<UserIdParams>, res: Response) => {
+router.delete('/users/:id', async (req: Request<IdParams>, res: Response) => {
     try {
         await UserService.deleteUser(req.params.id);
         res.status(204).send();
