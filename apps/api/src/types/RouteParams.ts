@@ -1,11 +1,3 @@
-export interface UserIdParams {
+export interface IdParams {
     id: string;
-}
-
-export interface GroupIdParams {
-    groupId: string;
-}
-
-export interface EventIdParams {
-    eventId: string;
 }
