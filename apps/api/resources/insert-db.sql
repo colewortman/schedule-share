@@ -1,3 +1,17 @@
+-- Clear all data (reverse dependency order)
+TRUNCATE TABLE schedule.entries CASCADE;
+
+TRUNCATE TABLE schedule.schedules CASCADE;
+
+TRUNCATE TABLE schedule.group_members CASCADE;
+
+TRUNCATE TABLE schedule.groups CASCADE;
+
+TRUNCATE TABLE schedule.users CASCADE;
+
+TRUNCATE TABLE schedule.activity_types CASCADE;
+
+-- Now insert all your data (same as before)
 -- Users
 INSERT INTO
     schedule.users (
@@ -56,43 +70,6 @@ VALUES (
         'admin'
     );
 
--- Schedules
--- User schedules (group_id NULL)
-INSERT INTO
-    schedule.schedules (
-        schedule_id,
-        user_id,
-        group_id
-    )
-VALUES (
-        'aaaaaaaa-1111-1111-1111-aaaaaaaa1111',
-        '11111111-1111-1111-1111-111111111111',
-        NULL
-    ),
-    (
-        'bbbbbbbb-2222-2222-2222-bbbbbbbb2222',
-        '22222222-2222-2222-2222-222222222222',
-        NULL
-    );
-
--- Group schedules (user_id NULL)
-INSERT INTO
-    schedule.schedules (
-        schedule_id,
-        user_id,
-        group_id
-    )
-VALUES (
-        'cccccccc-aaaa-aaaa-aaaa-ccccccccaaaa',
-        NULL,
-        'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
-    ),
-    (
-        'dddddddd-bbbb-bbbb-bbbb-ddddddddbbbb',
-        NULL,
-        'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb'
-    );
-
 -- Activity types
 INSERT INTO
     schedule.activity_types (
@@ -112,8 +89,48 @@ VALUES (
         'Lunch'
     );
 
--- Entries
--- User schedule entries
+-- Schedules (User schedules)
+INSERT INTO
+    schedule.schedules (
+        schedule_id,
+        user_id,
+        group_id
+    )
+VALUES (
+        'aaaaaaaa-1111-1111-1111-aaaaaaaa1111',
+        '11111111-1111-1111-1111-111111111111',
+        NULL
+    ),
+    (
+        'bbbbbbbb-2222-2222-2222-bbbbbbbb2222',
+        '22222222-2222-2222-2222-222222222222',
+        NULL
+    ),
+    (
+        'cccccccc-3333-3333-3333-cccccccc3333',
+        '33333333-3333-3333-3333-333333333333',
+        NULL
+    );
+
+-- Schedules (Group schedules)
+INSERT INTO
+    schedule.schedules (
+        schedule_id,
+        user_id,
+        group_id
+    )
+VALUES (
+        'cccccccc-aaaa-aaaa-aaaa-ccccccccaaaa',
+        NULL,
+        'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
+    ),
+    (
+        'dddddddd-bbbb-bbbb-bbbb-ddddddddbbbb',
+        NULL,
+        'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb'
+    );
+
+-- Entries (User schedule entries)
 INSERT INTO
     schedule.entries (
         entry_id,
@@ -143,7 +160,7 @@ VALUES (
         '22222222-2222-2222-2222-222222222222'
     );
 
--- Group schedule entries
+-- Entries (Group schedule entries)
 INSERT INTO
     schedule.entries (
         entry_id,
