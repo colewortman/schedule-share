@@ -9,7 +9,8 @@
     "build": "tsc",
     "lint": "eslint . --ext .ts",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "db:test-build": "psql -U postgres -d schedule_share -f ./resources/insert-db.sql"
   },
   "keywords": [],
   "author": "",
