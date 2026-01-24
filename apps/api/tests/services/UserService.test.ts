@@ -110,7 +110,7 @@ describe('UserService', () => {
         );
         expect(UserRepository.updateUser).toHaveBeenCalledTimes(1);
 
-    })
+    });
 
     it('should delete an existing user', async () => {
 
