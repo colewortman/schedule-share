@@ -9,7 +9,7 @@ on:
       - "apps/api/**"
   pull_request:
     branches:
-      - "dev**"
+      - "dev*"
     paths:
       - "apps/api/**"
 
