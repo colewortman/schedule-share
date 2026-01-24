@@ -4,7 +4,7 @@ on:
   workflow_call: 
   push:
     branches:
-      - "dev**"
+      - "dev*"
     paths:
       - "apps/api/**"
   pull_request:
