@@ -17,7 +17,7 @@ router.get('/groups', async (_req: Request, res: Response) => {
 
 router.get('/groups/:id', async (req: Request<IdParams>, res: Response) => {
     try {
-        const group = await GroupService.getGroupByID(req.params.id)
+        const group = await GroupService.getGroupById(req.params.id)
         res.status(200).json(group);
     } catch (error) {
         console.error('Error getting group:', error);
@@ -27,7 +27,8 @@ router.get('/groups/:id', async (req: Request<IdParams>, res: Response) => {
 
 router.post('/groups', async (req: Request, res: Response) => {
     try {
-        const newGroup = await GroupService.createGroup(req.body)
+        const group_name = req.body.group_name;
+        const newGroup = await GroupService.createGroup(group_name);
         res.status(201).json(newGroup);
     } catch (error) {
         console.error('Error creating group:', error);

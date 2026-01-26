@@ -8,7 +8,7 @@ class GroupService {
         return groups;
     }
 
-    static async getGroupByID(group_id: string) {
+    static async getGroupById(group_id: string) {
         const group = await GroupRepository.getGroupById(group_id);
         return group;
     }
