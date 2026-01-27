@@ -1,7 +1,6 @@
 import { Router, Request, Response } from 'express';
 import GroupService from "../service/GroupService";
-import { IdParams } from '../types/RouteParams';
-//import type { IdParams } from '../types/RouteParams';
+import type { IdParams } from '../types/RouteParams';
 
 const router = Router();
 
