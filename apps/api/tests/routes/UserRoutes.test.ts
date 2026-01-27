@@ -2,6 +2,7 @@ import request from 'supertest';
 import { createApp } from '../../src/app';
 import dbClient from '../../src/dbconfig';
 import { resetCounter } from '../__mocks__/uuid';
+import UserRepository from '../../src/repository/UserRepository';
 
 describe('UserRoutes API', () => {
     const TEST_USER_1 = {
@@ -118,5 +119,15 @@ describe('UserRoutes API', () => {
                 email: TEST_USER_3.email,
             })
         )
+    });
+
+    it('should delete an existing user', async () => {
+    
+        const app = createApp();
+        await request(app).delete(`/api/users/${TEST_USER_2.user_id}`);
+
+        const response = await UserRepository.getUserById(TEST_USER_2.user_id);
+        expect(response).toBeUndefined();
+    
     });
 });

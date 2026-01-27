@@ -16,7 +16,7 @@ router.get('/groups', async (_req: Request, res: Response) => {
 
 router.get('/groups/:id', async (req: Request<IdParams>, res: Response) => {
     try {
-        const group = await GroupService.getGroupById(req.params.id)
+        const group = await GroupService.getGroupById(req.params.id);
         res.status(200).json(group);
     } catch (error) {
         console.error('Error getting group:', error);
@@ -44,6 +44,16 @@ router.put('/groups/:id', async (req: Request<IdParams>, res: Response) => {
         res.status(200).json(updatedGroup);
     } catch (error) {
         console.error('Error updating group:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+router.delete('/groups/:id', async (req: Request<IdParams>, res: Response) => {
+    try {
+        await GroupService.deleteGroup(req.params.id);
+        res.status(204).send();
+    } catch (error) {
+        console.error('Error deleting group:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });

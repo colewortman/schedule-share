@@ -2,6 +2,7 @@ import request from 'supertest';
 import { createApp } from '../../src/app';
 import dbClient from '../../src/dbconfig';
 import { resetCounter } from '../__mocks__/uuid';
+import GroupRepository from '../../src/repository/GroupRepository';
 
 describe('GroupRoutes API', () => {
     const TEST_GROUP_1 = {
@@ -102,5 +103,14 @@ describe('GroupRoutes API', () => {
                 group_name: TEST_GROUP_3.group_name
             })
         );
+    });
+
+    it('should delete an existing group', async () => {
+
+        const app = createApp();
+        await request(app).delete(`/api/groups/${TEST_GROUP_2.group_id}`);
+    
+        const response = await GroupRepository.getGroupById(TEST_GROUP_2.group_id);
+        expect(response).toBeUndefined();
     });
 });
