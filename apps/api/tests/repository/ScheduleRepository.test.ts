@@ -6,8 +6,8 @@ describe('Schedule Repository', () => {
     
     const TEST_USER_1 = {
         user_id: '11111111-1111-1111-1111-111111111111',
-        user_name: 'testuser',
-        email: 'test1@example.com',
+        user_name: 'scheduletestuser',
+        email: 'schedule@example.com',
         password_hash: 'hash1',
     };
     const TEST_GROUP_1 = {
