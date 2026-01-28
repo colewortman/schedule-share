@@ -8,7 +8,7 @@ describe('Schedule Repository', () => {
         user_id: '11111111-1111-1111-1111-111111111111',
         user_name: 'scheduletestuser',
         email: 'schedule@example.com',
-        password_hash: 'hash1',
+        password_hash: 'schedulehash',
     };
     const TEST_GROUP_1 = {
         group_id: '22222222-2222-2222-2222-222222222222',
