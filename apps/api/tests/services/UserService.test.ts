@@ -120,10 +120,6 @@ describe('UserService', () => {
         
     });
 
-    it('should handle errors when deleting users', async () => {
-
-    });
-
     it('should handle errors', async () => {
 
         jest.spyOn(UserRepository, 'getAllUsers').mockRejectedValue(new Error('Database error'));

@@ -1,45 +1,44 @@
 import UserRepository from "../../src/repository/UserRepository";
 import dbClient from "../../src/dbconfig";
 import { resetCounter } from '../__mocks__/uuid';
+import { DbTest } from "../helpers/DbTest";
 
 describe('UserRepository', () => {
     const TEST_USER_1 = {
-        user_id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+        user_id: '11111111-1111-1111-1111-111111111111',
         user_name: 'testuser',
         email: 'test1@example.com',
         password_hash: 'hash1',
     };
     const TEST_USER_2 = {
-        user_id: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
+        user_id: '22222222-2222-2222-2222-222222222222',
         user_name: 'testuser2',
         email: 'test2@example.com',
         password_hash: 'hash2',
     };
-    const TEST_USER_3 = {
-        user_id: 'cccccccc-cccc-cccc-cccc-cccccccccccc',
+    const TEST_INSERT_USER = {
+        user_id: '33333333-3333-3333-3333-333333333333',
         user_name: 'testuser3',
         email: 'test3@example.com',
         password_hash: 'hash3',
     };
 
+    let dbHelper: DbTest;
+
     beforeAll(async () => {
-        await dbClient.connect();
+        dbHelper = new DbTest(dbClient);
     });
 
     beforeEach(async () => {
         resetCounter();
 
-        await dbClient.query(`delete from schedule.users`)
-
-        await dbClient.query(`
-            insert into schedule.users (user_id, user_name, email, password_hash)
-            values 
-                ($1, $2, $3, $4),
-                ($5, $6, $7, $8)
-        `, [
-            TEST_USER_1.user_id, TEST_USER_1.user_name, TEST_USER_1.email, TEST_USER_1.password_hash,
-            TEST_USER_2.user_id, TEST_USER_2.user_name, TEST_USER_2.email, TEST_USER_2.password_hash
-        ]);
+        await dbHelper.cleanDatabase();
+        await dbHelper.insertTestData({
+            users: [
+                TEST_USER_1,
+                TEST_USER_2
+            ]
+        });
     });
 
     afterAll(async () => {
@@ -79,7 +78,7 @@ describe('UserRepository', () => {
     });
 
     it('should create a new user in the database', async () => {
-        const newUser = await UserRepository.createUser(TEST_USER_3.user_id, TEST_USER_3.user_name, TEST_USER_3.email, TEST_USER_3.password_hash);
+        const newUser = await UserRepository.createUser(TEST_INSERT_USER.user_id, TEST_INSERT_USER.user_name, TEST_INSERT_USER.email, TEST_INSERT_USER.password_hash);
         expect(newUser).toBeDefined();
         expect(newUser).toEqual(
             expect.objectContaining({

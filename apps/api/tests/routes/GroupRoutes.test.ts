@@ -3,6 +3,7 @@ import { createApp } from '../../src/app';
 import dbClient from '../../src/dbconfig';
 import { resetCounter } from '../__mocks__/uuid';
 import GroupRepository from '../../src/repository/GroupRepository';
+import { DbTest } from '../helpers/DbTest';
 
 describe('GroupRoutes API', () => {
     const TEST_GROUP_1 = {
@@ -13,32 +14,31 @@ describe('GroupRoutes API', () => {
         group_id: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
         group_name: 'test2'
     };
-    const TEST_GROUP_3 = {
+    const TEST_INSERT_GROUP = {
         group_name: 'test3'
     };
 
+    let dbHelper: DbTest;
+
     beforeAll(async () => {
-        await dbClient.connect();
+        dbHelper = new DbTest(dbClient);
     });
-    
+
     beforeEach(async () => {
+    
         resetCounter();
 
-        await dbClient.query('delete from schedule.groups');
-
-        await dbClient.query(`
-            insert into schedule.groups (group_id, group_name)
-            values 
-                ($1, $2),
-                ($3, $4)
-        `, [
-            TEST_GROUP_1.group_id, TEST_GROUP_1.group_name,
-            TEST_GROUP_2.group_id, TEST_GROUP_2.group_name
-        ]);
+        await dbHelper.cleanDatabase();
+        await dbHelper.insertTestData({
+            groups: [
+                TEST_GROUP_1,
+                TEST_GROUP_2
+            ]
+        });
     });
-
+    
     afterAll(async () => {
-        await dbClient.query('delete from schedule.groups');
+        await dbHelper.cleanDatabase();
         await dbClient.end();
     });
 
@@ -81,7 +81,7 @@ describe('GroupRoutes API', () => {
         const app = createApp();
         const response = await request(app)
             .post('/api/groups')
-            .send(TEST_GROUP_3)
+            .send(TEST_INSERT_GROUP)
             .set('Content-Type', 'application/json');
 
         expect(response.status).toBe(201);
@@ -89,7 +89,7 @@ describe('GroupRoutes API', () => {
         expect(response.body).toEqual(
             expect.objectContaining({
                 group_id: expect.any(String),
-                group_name: TEST_GROUP_3.group_name
+                group_name: TEST_INSERT_GROUP.group_name
             })
         );
 
@@ -100,7 +100,7 @@ describe('GroupRoutes API', () => {
         expect(getResponse.body).toEqual(
             expect.objectContaining({
                 group_id: expect.any(String),
-                group_name: TEST_GROUP_3.group_name
+                group_name: TEST_INSERT_GROUP.group_name
             })
         );
     });

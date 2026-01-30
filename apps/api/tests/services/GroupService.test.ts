@@ -12,7 +12,7 @@ describe('GroupService', () => {
         group_id: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
         group_name: 'test2'
     };
-    const TEST_GROUP_3 = {
+    const TEST_INSERT_GROUP = {
         group_name: 'test3'
     };
 
@@ -48,12 +48,11 @@ describe('GroupService', () => {
     it('should create a new group', async () => {
         const expectedGroup = {
             group_id: '...',
-            group_name: TEST_GROUP_3.group_name
+            group_name: TEST_INSERT_GROUP.group_name
         };
 
         jest.spyOn(GroupRepository, 'createGroup').mockResolvedValue(expectedGroup);
-        const newGroup = await GroupService.createGroup(TEST_GROUP_3.group_name);
-
+        const newGroup = await GroupService.createGroup(TEST_INSERT_GROUP.group_name);
         expect(newGroup).toBeDefined();
         expect(newGroup).toEqual(
             expect.objectContaining({
@@ -89,10 +88,6 @@ describe('GroupService', () => {
         expect(result).toBeUndefined();
     });
 
-    it('should handle errors when deleting groups', async () => {
-        // Placeholder for future implementation
-    });
-
     it('should handle errors', async () => {
         jest.spyOn(GroupRepository, 'getAllGroups').mockRejectedValue(new Error('Database error'));
         await expect(GroupService.getAllGroups()).rejects.toThrow('Database error');
@@ -101,7 +96,7 @@ describe('GroupService', () => {
         await expect(GroupService.getGroupById(TEST_GROUP_1.group_id)).rejects.toThrow('Database error');
 
         jest.spyOn(GroupRepository, 'createGroup').mockRejectedValue(new Error('Database error'));
-        await expect(GroupService.createGroup(TEST_GROUP_3.group_name)).rejects.toThrow('Database error');
+        await expect(GroupService.createGroup(TEST_INSERT_GROUP.group_name)).rejects.toThrow('Database error');
 
         jest.spyOn(GroupRepository, 'updateGroup').mockRejectedValue(new Error('Database error'));
         await expect(GroupService.updateGroup(TEST_GROUP_1.group_id, TEST_GROUP_1.group_name)).rejects.toThrow('Database error');

@@ -19,7 +19,7 @@ class ScheduleRepository {
 
     static async createSchedule(schedule_id: string, user_id: string|null, group_id: string|null) {
         const res = await dbClient.query(
-        'INSERT $1, $2, $3 INTO schedule.schedules WHERE schedule_id = $1, user_id = $2, group_id = $3',
+        'INSERT INTO schedule.schedules (schedule_id, user_id, group_id) VALUES ($1, $2, $3) RETURNING *',
         [schedule_id, user_id, group_id]
         );
         return res.rows[0];
