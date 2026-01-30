@@ -8,7 +8,7 @@
     "dev": "ts-node-dev --respawn src/index.ts",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
-    "test": "jest",
+    "test": "jest --runInBand",
     "test:watch": "jest --watch",
     "db:test-build": "psql -U postgres -d schedule_share -f ./resources/insert-db.sql"
   },

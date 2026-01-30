@@ -3,6 +3,7 @@ import { createApp } from '../../src/app';
 import dbClient from '../../src/dbconfig';
 import { resetCounter } from '../__mocks__/uuid';
 import UserRepository from '../../src/repository/UserRepository';
+import { DbTest } from '../helpers/DbTest';
 
 describe('UserRoutes API', () => {
     const TEST_USER_1 = {
@@ -17,35 +18,34 @@ describe('UserRoutes API', () => {
         email: 'test2@example.com',
         password_hash: 'hash2',
     };
-    const TEST_USER_3 = {
+    const TEST_INSERT_USER = {
         user_name: 'testuser3',
         email: 'test3@example.com',
         password: 'testpassword',
     };
 
     
+    let dbHelper: DbTest;
+
     beforeAll(async () => {
-        await dbClient.connect();
+        dbHelper = new DbTest(dbClient);
     });
 
     beforeEach(async () => {
+    
         resetCounter();
 
-        await dbClient.query(`delete from schedule.users`)
-
-        await dbClient.query(`
-            insert into schedule.users (user_id, user_name, email, password_hash)
-            values 
-                ($1, $2, $3, $4),
-                ($5, $6, $7, $8)
-        `, [
-            TEST_USER_1.user_id, TEST_USER_1.user_name, TEST_USER_1.email, TEST_USER_1.password_hash,
-            TEST_USER_2.user_id, TEST_USER_2.user_name, TEST_USER_2.email, TEST_USER_2.password_hash
-        ]);
+        await dbHelper.cleanDatabase();
+        await dbHelper.insertTestData({
+            users: [
+                TEST_USER_1,
+                TEST_USER_2
+            ]
+        });
     });
-
+    
     afterAll(async () => {
-        await dbClient.query(`delete from schedule.users`);
+        await dbHelper.cleanDatabase();
         await dbClient.end();
     });
 
@@ -92,7 +92,7 @@ describe('UserRoutes API', () => {
         const app = createApp();
         const response = await request(app)
             .post(`/api/users`)
-            .send(TEST_USER_3)
+            .send(TEST_INSERT_USER)
             .set('Content-Type', 'application/json');
 
         expect(response.status).toBe(201);
@@ -100,8 +100,8 @@ describe('UserRoutes API', () => {
         expect(response.body).toEqual(
             expect.objectContaining({
                 user_id: expect.any(String),
-                user_name: TEST_USER_3.user_name,
-                email: TEST_USER_3.email,
+                user_name: TEST_INSERT_USER.user_name,
+                email: TEST_INSERT_USER.email,
             })
         );
 
@@ -115,8 +115,8 @@ describe('UserRoutes API', () => {
         expect(getResponse.body).toEqual(
             expect.objectContaining({
                 user_id: expect.any(String),
-                user_name: TEST_USER_3.user_name,
-                email: TEST_USER_3.email,
+                user_name: TEST_INSERT_USER.user_name,
+                email: TEST_INSERT_USER.email,
             })
         )
     });

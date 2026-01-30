@@ -1,6 +1,7 @@
 import GroupRepository from "../../src/repository/GroupRepository";
 import dbClient from "../../src/dbconfig";
 import { resetCounter } from "../__mocks__/uuid";
+import { DbTest } from "../helpers/DbTest";
 
 describe('Group repository', () => {
 
@@ -12,34 +13,32 @@ describe('Group repository', () => {
         group_id: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
         group_name: 'test2',
     };
-    const TEST_GROUP_3 = {
+    const TEST_INSERT_GROUP = {
         group_id: 'cccccccc-cccc-cccc-cccc-cccccccccccc',
         group_name: 'test3'
     }
 
+    let dbHelper: DbTest;
+
     beforeAll(async () => {
-        await dbClient.connect();
+        dbHelper = new DbTest(dbClient);
     });
-    
+
     beforeEach(async () => {
     
         resetCounter();
 
-        await dbClient.query('delete from schedule.groups')
-
-        await dbClient.query(`
-            insert into schedule.groups (group_id, group_name)
-            values 
-                ($1, $2),
-                ($3, $4)
-        `, [
-            TEST_GROUP_1.group_id, TEST_GROUP_1.group_name,
-            TEST_GROUP_2.group_id, TEST_GROUP_2.group_name
-        ]);
+        await dbHelper.cleanDatabase();
+        await dbHelper.insertTestData({
+            groups: [
+                TEST_GROUP_1,
+                TEST_GROUP_2
+            ]
+        });
     });
-
+    
     afterAll(async () => {
-        await dbClient.query('delete from schedule.groups');
+        await dbHelper.cleanDatabase();
         await dbClient.end();
     });
 
@@ -77,7 +76,7 @@ describe('Group repository', () => {
 
     it('should create a new group in the database', async () => {
     
-        const newGroup = await GroupRepository.createGroup(TEST_GROUP_3.group_id, TEST_GROUP_3.group_name);
+        const newGroup = await GroupRepository.createGroup(TEST_INSERT_GROUP.group_id, TEST_INSERT_GROUP.group_name);
 
         expect(newGroup).toBeDefined();
         expect(newGroup).toEqual(
