@@ -1,4 +1,5 @@
 import ScheduleRepository from "../repository/ScheduleRepository";
+import { v4 as uuidv4 } from 'uuid';
 
 class ScheduleService {
 
@@ -17,7 +18,8 @@ class ScheduleService {
         return schedule;
     }
 
-    static async createSchedule(schedule_id: string, user_id: string|null, group_id: string|null) {
+    static async createSchedule(user_id: string|null, group_id: string|null) {
+        const schedule_id = uuidv4();
         const schedule = await ScheduleRepository.createSchedule(schedule_id, user_id, group_id);
         return schedule;
     }

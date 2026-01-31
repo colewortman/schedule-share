@@ -108,9 +108,11 @@ describe('GroupRoutes API', () => {
     it('should delete an existing group', async () => {
 
         const app = createApp();
-        await request(app).delete(`/api/groups/${TEST_GROUP_2.group_id}`);
+        const response = await request(app).delete(`/api/groups/${TEST_GROUP_2.group_id}`);
+
+        expect(response.status).toBe(204);
     
-        const response = await GroupRepository.getGroupById(TEST_GROUP_2.group_id);
-        expect(response).toBeUndefined();
+        const group = await GroupRepository.getGroupById(TEST_GROUP_2.group_id);
+        expect(group).toBeUndefined();
     });
 });

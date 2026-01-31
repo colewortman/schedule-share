@@ -36,8 +36,8 @@ router.get('/schedules/:id', async (req: Request<IdParams>, res: Response) => {
 
 router.post('/schedules', async (req: Request, res: Response) => {
     try {
-        const { schedule_id, user_id, group_id } = req.body;
-        const newSchedule = await ScheduleService.createSchedule(schedule_id, user_id, group_id);
+        const { user_id, group_id } = req.body;
+        const newSchedule = await ScheduleService.createSchedule(user_id, group_id);
         res.status(201).json(newSchedule);
     } catch (error) {
         console.error('Error creating schedule:', error);
