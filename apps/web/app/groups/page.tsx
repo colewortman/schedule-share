@@ -23,6 +23,9 @@ export default function GroupsPage() {
           </li>
         ))}
       </ul>
+      <Link href="/group_schedule" className="mt-4 text-blue-500 underline">
+        Go to Group Schedule Page
+      </Link>
       <Link href="/" className="mt-4 text-blue-500 underline">
         Back to Home
       </Link>
