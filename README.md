@@ -198,7 +198,3 @@ GitHub Actions automatically:
 ## Contributing
 
 This is primarily a learning project, but suggestions and constructive feedback are welcome! If you're also learning and want to discuss approaches or best practices, feel free to open an issue.
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
