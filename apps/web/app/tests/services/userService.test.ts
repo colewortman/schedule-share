@@ -27,6 +27,7 @@ describe('userService', () => {
         const users = await userService.getAll();
         expect(users).toEqual(mockUsers);
         expect(mockFetchFromApi).toHaveBeenCalledWith("/users");
+    
     });
 
     it('should get a user by id', async () => {
@@ -38,6 +39,7 @@ describe('userService', () => {
         const user = await userService.getById("1");
         expect(user).toEqual(mockUser);
         expect(mockFetchFromApi).toHaveBeenCalledWith("/users/1");
+    
     });
 
     it('should create a user', async () => {
@@ -61,14 +63,14 @@ describe('userService', () => {
         const updatedUser = await userService.update("3", { user_name: "updatedUser", email: "updatedUser@example.com"});
         expect(updatedUser.user_id).toEqual(mockUser.user_id);
         expect(mockFetchFromApi).toHaveBeenCalledWith("/users/3", { method: "PUT", body: JSON.stringify({ user_name: "updatedUser", email: "updatedUser@example.com" }) });
+    
     });
 
     it('should delete a user', async () => {
     
         mockFetchFromApi.mockResolvedValue(undefined);
-
         await userService.delete("3");
-
         expect(mockFetchFromApi).toHaveBeenCalledWith("/users/3", { method: "DELETE" });
+
     });
 });
