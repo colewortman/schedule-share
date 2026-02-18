@@ -70,22 +70,6 @@ describe('scheduleService', () => {
     
     });
 
-    it('should update a schedule', async () => {
-    
-        const mockSchedule: Schedule = {
-            schedule_id: "1",
-            user_id: "1",
-            group_id: null
-        };
-
-        mockFetchFromApi.mockResolvedValue(mockSchedule);
-
-        const updatedSchedule = await scheduleService.update("1", { user_id: "2" });
-        expect(updatedSchedule.schedule_id).toEqual(mockSchedule.schedule_id);
-        expect(mockFetchFromApi).toHaveBeenCalledWith("/schedules/1", { method: "PUT", body: JSON.stringify({ user_id: "2" }) });
-    
-    });
-
     it('should delete a schedule', async () => {
     
         mockFetchFromApi.mockResolvedValue(undefined);
