@@ -1,3 +1,7 @@
 /apps/api/node_modules
 
+# C# build output
+/apps/cs-api/bin/
+/apps/cs-api/obj/
+
 .env
