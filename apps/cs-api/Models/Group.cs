@@ -8,7 +8,6 @@ public class Group
 
 public class CreateGroupRequest
 {
-    public required string GroupId { get; set; }
     public required string GroupName { get; set; }
 }
 

@@ -8,6 +8,8 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<DbConfig>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+builder.Services.AddScoped<IGroupService, GroupService>();
 
 var app = builder.Build();
 
