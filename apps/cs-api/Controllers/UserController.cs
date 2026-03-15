@@ -5,7 +5,7 @@ using cs_api.Services;
 namespace cs_api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/users")]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
