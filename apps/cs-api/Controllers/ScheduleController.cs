@@ -5,7 +5,7 @@ using cs_api.Services;
 namespace cs_api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/schedules")]
 public class ScheduleController : ControllerBase
 {
     private readonly IScheduleService _scheduleService;

@@ -5,7 +5,7 @@ using cs_api.Services;
 namespace cs_api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/groups")]
 public class GroupController : ControllerBase
 {
     private readonly IGroupService _groupService;

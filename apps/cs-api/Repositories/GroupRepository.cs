@@ -43,7 +43,7 @@ public class GroupRepository : IGroupRepository
     {
         await using var conn = await _dataSource.OpenConnectionAsync();
         await using var cmd = new NpgsqlCommand(
-            "INSERT INTO schedule.groups (group_id, group_name) VALUES (@id, @name)", conn);
+            "INSERT INTO schedule.groups (group_id, group_name) VALUES (@id, @name) RETURNING group_id, group_name", conn);
         cmd.Parameters.AddWithValue("id", Guid.Parse(groupId));
         cmd.Parameters.AddWithValue("name", groupName);
         await using var reader = await cmd.ExecuteReaderAsync();
